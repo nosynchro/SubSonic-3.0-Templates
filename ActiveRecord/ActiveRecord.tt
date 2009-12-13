@@ -179,7 +179,7 @@ namespace <#=Namespace #>
             }
 
             return single;
-        }      
+        }
         
         public static <#=tbl.ClassName#> SingleOrDefault(Expression<Func<<#=tbl.ClassName#>, bool>> expression,string connectionString, string providerName) {
             var repo = GetRepo(connectionString,providerName);
@@ -190,8 +190,6 @@ namespace <#=Namespace #>
             }
 
             return single;
-
-
         }
         
         
@@ -219,6 +217,7 @@ namespace <#=Namespace #>
         public static IQueryable<<#=tbl.ClassName#>> All(string connectionString, string providerName) {
             return GetRepo(connectionString,providerName).GetAll();
         }
+        
         public static IQueryable<<#=tbl.ClassName#>> All() {
             return GetRepo().GetAll();
         }
@@ -236,10 +235,32 @@ namespace <#=Namespace #>
             
         }
 
-
         public static PagedList<<#=tbl.ClassName#>> GetPaged(int pageIndex, int pageSize) {
             return GetRepo().GetPaged(pageIndex, pageSize);
-            
+        }
+
+        public static PagedList<<#=tbl.ClassName#>> GetPaged(Expression<Func<<#=tbl.ClassName#>, bool>> expression, string sortBy, int pageIndex, int pageSize,string connectionString, string providerName) {
+            return GetRepo(connectionString,providerName).GetPaged(expression, sortBy, pageIndex, pageSize);
+        }
+
+        public static PagedList<<#=tbl.ClassName#>> GetPaged(Expression<Func<<#=tbl.ClassName#>, bool>> expression, string[] sortBy, int pageIndex, int pageSize,string connectionString, string providerName) {
+            return GetRepo(connectionString,providerName).GetPaged(expression, sortBy, pageIndex, pageSize);
+        }
+
+        public static PagedList<<#=tbl.ClassName#>> GetPaged(Expression<Func<<#=tbl.ClassName#>, bool>> expression, string sortBy, int pageIndex, int pageSize) {
+            return GetRepo().GetPaged(expression, sortBy, pageIndex, pageSize);
+        }
+
+        public static PagedList<<#=tbl.ClassName#>> GetPaged(Expression<Func<<#=tbl.ClassName#>, bool>> expression, string[] sortBy, int pageIndex, int pageSize) {
+            return GetRepo().GetPaged(expression, sortBy, pageIndex, pageSize);
+        }
+
+        public static PagedList<<#=tbl.ClassName#>> GetPaged(Expression<Func<<#=tbl.ClassName#>, bool>> expression, int pageIndex, int pageSize,string connectionString, string providerName) {
+            return GetRepo(connectionString,providerName).GetPaged(expression, pageIndex, pageSize);
+        }
+
+        public static PagedList<<#=tbl.ClassName#>> GetPaged(Expression<Func<<#=tbl.ClassName#>, bool>> expression, int pageIndex, int pageSize) {
+            return GetRepo().GetPaged(expression, pageIndex, pageSize);
         }
 
         public string KeyName()
