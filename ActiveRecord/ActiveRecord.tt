@@ -360,7 +360,7 @@ namespace <#=Namespace #>
                     _<#=col.CleanName #>=value;
                     var col=tbl.Columns.SingleOrDefault(x=>x.Name=="<#=col.Name #>");
                     if(col!=null){
-                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && _isLoaded){
+                        if(!_dirtyColumns.Any(x=>x.Name==col.Name) && (_isLoaded || _isNew)){
                             _dirtyColumns.Add(col);
                         }
                     }
