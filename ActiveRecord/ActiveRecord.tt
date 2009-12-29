@@ -194,26 +194,23 @@ namespace <#=Namespace #>
         
         
         public static bool Exists(Expression<Func<<#=tbl.ClassName#>, bool>> expression,string connectionString, string providerName) {
-           
             return All(connectionString,providerName).Any(expression);
         }        
+        
         public static bool Exists(Expression<Func<<#=tbl.ClassName#>, bool>> expression) {
-           
             return All().Any(expression);
         }        
 
         public static IList<<#=tbl.ClassName#>> Find(Expression<Func<<#=tbl.ClassName#>, bool>> expression) {
-            
             var repo = GetRepo();
             return repo.Find(expression).ToList();
         }
         
         public static IList<<#=tbl.ClassName#>> Find(Expression<Func<<#=tbl.ClassName#>, bool>> expression,string connectionString, string providerName) {
-
             var repo = GetRepo(connectionString,providerName);
             return repo.Find(expression).ToList();
-
         }
+        
         public static IQueryable<<#=tbl.ClassName#>> All(string connectionString, string providerName) {
             return GetRepo(connectionString,providerName).GetAll();
         }
@@ -434,7 +431,7 @@ namespace <#=Namespace #>
                 this.ModifiedBy=Environment.UserName;
 <#}#>
 <#if(tbl.Columns.Any(x=>x.Name=="ModifiedOn")){#>
-            this.ModifiedOn=DateTime.Now;
+            this.ModifiedOn=DateTime.NowToUniversalTime();
 <#}#>
             
             if(this._dirtyColumns.Count>0)
@@ -463,16 +460,20 @@ namespace <#=Namespace #>
        
         public void Add(IDataProvider provider){
 
+<#if(tbl.Columns.Any(x=>x.Name=="IsActive")){#>
+            
+            this.IsActive=true;
+<#}#>
 <#if(tbl.Columns.Any(x=>x.Name=="CreatedOn")){#>
             
-            this.CreatedOn=DateTime.Now;
+            this.CreatedOn=DateTime.Now.ToUniversalTime();
 <#}#>
 <#if(tbl.Columns.Any(x=>x.Name=="CreatedBy")){#>
             if(String.IsNullOrEmpty(this.CreatedBy))
                 this.CreatedBy=Environment.UserName;
 <#}#>
 <#if(tbl.Columns.Any(x=>x.Name=="ModifiedOn")){#>
-            this.ModifiedOn=DateTime.Now;
+            this.ModifiedOn=DateTime.NowToUniversalTime();
 <#}#>
 <#if(tbl.Columns.Any(x=>x.Name=="ModifiedBy")){#>
             if(String.IsNullOrEmpty(this.ModifiedBy))
